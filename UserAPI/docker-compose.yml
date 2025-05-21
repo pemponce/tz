@@ -1,0 +1,26 @@
+services:
+  backend:
+    image: service
+    container_name: service
+    build:
+      .
+    depends_on:
+      - postgres
+    ports:
+      - "8080-8080:8080-8080"
+    env_file:
+      - .env
+    environment:
+      TZ: Europe/Moscow
+    restart: always
+  postgres:
+    image: postgres
+    container_name: tz1
+    hostname: postgres
+    env_file:
+      - .env
+    volumes:
+      - .:/docker-entrypoint-initdb.d
+    ports:
+      - "5432:5432"
+    restart: always
